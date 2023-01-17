@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 function Categories({ value, onChangeCategory }) {
   const categories = [
