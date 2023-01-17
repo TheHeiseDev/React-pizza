@@ -60,6 +60,8 @@ function Home() {
     window.scrollTo(0, 0);
   };
 
+  // If there was a first render, then we check the URL parameters and save in the redux
+  // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)); // delete first symbol in the link (symbol: ?)
@@ -78,6 +80,8 @@ function Home() {
     }
   }, []);
 
+  // If the parameters were changed and there was a first render
+  // Если изменили парметры и был первый рендер
   React.useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
@@ -89,8 +93,8 @@ function Home() {
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   // When first rendering, do not sew query parameters into the url
+  // При первом рендеринге не вшивать параметры запроса в url
   // isMounted - The toggle switch responsible for this condition
-
   React.useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
@@ -103,6 +107,7 @@ function Home() {
     }
     isMounted.current = true;
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
   return (
     <div className="container">
       <div className="content__top">

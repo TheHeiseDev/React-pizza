@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleTypeSort } from "../redux/slices/filterSlice";
 
@@ -14,8 +14,35 @@ export const sortList = [
 function SortMemo() {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
+  const sortRef = useRef();
 
   const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleClickEvent = (event) => {
+      let path = event.composedPath().includes(sortRef.current);
+      if (!path) {
+        setOpen(false);
+      }
+    };
+
+    const handleKeyEvent = (event) => {
+      let path = event.composedPath().includes(sortRef.current);
+      if (event.code === "Escape") {
+        if (!path) {
+          setOpen(false);
+        }
+      }
+    };
+    document.body.addEventListener("click", handleClickEvent);
+    document.body.addEventListener("keydown", handleKeyEvent);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickEvent);
+
+      document.body.removeEventListener("keydown", handleKeyEvent);
+    };
+  }, []);
 
   const handleSort = () => {
     setOpen((prev) => !prev);
@@ -27,7 +54,7 @@ function SortMemo() {
   };
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
