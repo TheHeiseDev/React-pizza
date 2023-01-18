@@ -38,24 +38,25 @@ function Home() {
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
   };
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `&category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    axios
-      .get(
+    try {
+      const response = await axios.get(
         `https://63c3b1edf0028bf85f9c9068.mockapi.io/pizzas?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}${search}`
-      )
-      .then((response) => {
-        setPizzas(response.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        alert("Не удалось получить пиццы из сервера");
-      });
+      );
+      setPizzas(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      alert(`Ошибка запроса на сервер ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
 
     window.scrollTo(0, 0);
   };

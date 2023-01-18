@@ -25,7 +25,6 @@ function SortMemo() {
         setOpen(false);
       }
     };
-
     const handleKeyEvent = (event) => {
       let path = event.composedPath().includes(sortRef.current);
       if (event.code === "Escape") {
