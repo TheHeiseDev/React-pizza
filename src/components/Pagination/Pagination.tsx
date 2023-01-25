@@ -1,11 +1,15 @@
+import React from "react";
 import styles from "./Pagination.module.scss";
 import ReactPaginate from "react-paginate";
 
-import React from "react";
+type PaginationProps = {
+  onChangePage: (page: number) => void;
+  currentPage: number;
+};
 
-function Pagination({ currentPage, onChangePage }) {
+const Pagination: React.FC<PaginationProps> = ({ currentPage, onChangePage }) => {
   // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
+  const handlePageClick = (event: any) => {
     onChangePage(event.selected + 1);
   };
   return (
@@ -19,10 +23,9 @@ function Pagination({ currentPage, onChangePage }) {
         pageRangeDisplayed={4}
         pageCount={3}
         forcePage={currentPage - 1}
-        renderOnZeroPageCount={null}
       />
     </>
   );
-}
+};
 
 export default Pagination;

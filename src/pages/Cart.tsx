@@ -2,21 +2,20 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartEmpty from "../components/CartEmpty";
-import CartItem from "../components/CartItem/CartItem";
-import { clearItems } from "../redux/slices/cartSlice";
+import CartItemBlock from "../components/CartItem/CartItemBlock";
+import { clearItems, selectCart } from "../redux/slices/cartSlice";
 
-function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { items, totalPrice } = useSelector((state) => state.cart);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const { items, totalPrice } = useSelector(selectCart);
+  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
   const onClickClear = () => {
     if (window.confirm("Очистить корзину?")) {
       dispatch(clearItems());
     }
   };
-
   if (!totalPrice) {
     return <CartEmpty />;
   }
@@ -99,8 +98,8 @@ function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item) => (
-            <CartItem key={item.id} {...item} />
+          {items.map((item: any) => (
+            <CartItemBlock key={item.id} {...item} />
           ))}
         </div>
         <div className="cart__bottom">
@@ -113,10 +112,7 @@ function Cart() {
             </span>
           </div>
           <div className="cart__bottom-buttons">
-            <Link
-              to="/"
-              className="button button--outline button--add go-back-btn"
-            >
+            <Link to="/" className="button button--outline button--add go-back-btn">
               <svg
                 width="8"
                 height="14"
@@ -143,6 +139,6 @@ function Cart() {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;

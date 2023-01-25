@@ -1,33 +1,53 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleTypeSort } from "../redux/slices/filterSlice";
+import {
+  handleTypeSort,
+  selectSort,
+  SortPropertyEnum,
+} from "../redux/slices/filterSlice";
 
-export const sortList = [
-  { name: "Популярности (Более)", sortProperty: "rating" },
-  { name: "Популярности (Менее)", sortProperty: "-rating" },
-  { name: "Цене (Убыванию)", sortProperty: "price" },
-  { name: "Цене (Возрастанию)", sortProperty: "-price" },
-  { name: "Алфавиту (А-Я)", sortProperty: "title" },
-  { name: "Алфавиту (Я-А)", sortProperty: "-title" },
+type SortItem = {
+  name: string;
+  sortProperty: SortPropertyEnum;
+};
+
+export const sortList: SortItem[] = [
+  { name: "Популярности (Более)", sortProperty: SortPropertyEnum.RATING },
+  { name: "Популярности (Менее)", sortProperty: SortPropertyEnum.RATING_ },
+  { name: "Цене (Убыванию)", sortProperty: SortPropertyEnum.PRICE },
+  { name: "Цене (Возрастанию)", sortProperty: SortPropertyEnum.PRICE_ },
+  { name: "Алфавиту (А-Я)", sortProperty: SortPropertyEnum.TITLE },
+  { name: "Алфавиту (Я-А)", sortProperty: SortPropertyEnum.TITLE_ },
 ];
 
-function SortMemo() {
+const SortMemo: React.FC = () => {
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
-  const sortRef = useRef();
+  const sort = useSelector(selectSort);
+
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = React.useState(false);
 
+  const onClicksortListItem = (obj: SortItem) => {
+    dispatch(handleTypeSort(obj));
+    setOpen(false);
+  };
+
+  const handleSort = () => {
+    setOpen((prev) => !prev);
+  };
+
   React.useEffect(() => {
-    const handleClickEvent = (event) => {
-      let path = event.composedPath().includes(sortRef.current);
+    const handleClickEvent = (event: MouseEvent) => {
+      const path = sortRef.current && event.composedPath().includes(sortRef.current);
       if (!path) {
         setOpen(false);
       }
     };
-    const handleKeyEvent = (event) => {
-      let path = event.composedPath().includes(sortRef.current);
-      if (event.code === "Escape") {
+
+    const handleKeyEvent = (event: KeyboardEvent) => {
+      let path = sortRef.current && event.composedPath().includes(sortRef.current);
+      if (event.key === "Escape") {
         if (!path) {
           setOpen(false);
         }
@@ -42,15 +62,6 @@ function SortMemo() {
       document.body.removeEventListener("keydown", handleKeyEvent);
     };
   }, []);
-
-  const handleSort = () => {
-    setOpen((prev) => !prev);
-  };
-  const onClicksortListItem = (obj) => {
-    dispatch(handleTypeSort(obj));
-
-    setOpen(false);
-  };
 
   return (
     <div ref={sortRef} className="sort">
@@ -77,10 +88,8 @@ function SortMemo() {
             {sortList.map((obj) => (
               <li
                 key={obj.sortProperty}
-                className={
-                  sort.sortProperty === obj.sortProperty ? "active" : ""
-                }
                 onClick={() => onClicksortListItem(obj)}
+                className={sort.sortProperty === obj.sortProperty ? "active" : ""}
               >
                 {obj.name}
               </li>
@@ -90,6 +99,6 @@ function SortMemo() {
       )}
     </div>
   );
-}
+};
 
-export const Sort = React.memo(SortMemo);
+export const SortPopup = React.memo(SortMemo);

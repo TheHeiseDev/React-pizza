@@ -1,37 +1,45 @@
-import React from "react";
+import React, { ChangeEvent, ChangeEventHandler } from "react";
 import styles from "./Search.module.scss";
 import searchSVG from "../../assets/img/search.svg";
 import removeSVG from "../../assets/img/btn-remove.svg";
-import { useSearch } from "../../hook/useSearch";
+
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../redux/slices/filterSlice";
 import debounce from "lodash.debounce";
 
-function Search() {
-  const inputRef = React.useRef();
-  // Responsible for the fast display of input data
+const Search: React.FC = () => {
+  const dispatch = useDispatch();
+  // Responsible for the fast display of input data (search value)
   const [value, setValue] = React.useState("");
-
-  // Responsible for sending the input data from the input
-  const { setSearchValue } = useSearch();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   // When you press the clear button, the focus stays on the input
   const onClickClear = () => {
-    setSearchValue("");
     setValue("");
-    inputRef.current.focus();
+    dispatch(setSearchValue(""));
+
+    inputRef.current?.focus();
   };
 
   // Loading delay when searching, search is performed (500 ms) after input is paused
   const updateSearchValue = React.useCallback(
-    debounce((str) => {
-      setSearchValue(str);
+    debounce((str: string) => {
+      dispatch(setSearchValue(str));
     }, 500),
     []
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
+
+  React.useEffect(() => {
+    return () => {
+      setValue("");
+      dispatch(setSearchValue(""));
+    };
+  }, []);
 
   return (
     <div className={styles.searchBlock}>
@@ -54,6 +62,6 @@ function Search() {
       )}
     </div>
   );
-}
+};
 
 export default Search;

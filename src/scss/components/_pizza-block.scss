@@ -18,6 +18,10 @@
     font-weight: 900;
     letter-spacing: 1%;
     margin-bottom: 20px;
+    transition: color 0.15s ease;
+    &:hover {
+      color: orangered;
+    }
   }
 
   &__selector {
