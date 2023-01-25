@@ -45,7 +45,7 @@ const Home: React.FC = () => {
     const category = categoryId > 0 ? `&category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    // Get pizzas from the server and save to redax
+    // Get pizzas from the server and save to Redux
     dispatch(
       fetchPizzas({
         sortBy,
@@ -59,63 +59,60 @@ const Home: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  // TODO: Fixed set URL params
   // If there was a first render, then we check the URL parameters and save in the redux
   // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
-  // React.useEffect(() => {
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1)); // delete first symbol in the link (symbol: ?)
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+      console.log(params);
 
-  //   if (window.location.search) {
-  //     const params = qs.parse(
-  //       window.location.search.substring(1)
-  //     ) as unknown as SearchPizzaParams; // delete first symbol in the link (symbol: ?)
-  //     const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+      dispatch(
+        setFilters({
+          searchValue: String(params.search),
+          categoryId: Number(params.categoryId),
+          currentPage: Number(params.currentPage),
+          sort: sort || sortList[0],
+        })
+      );
 
-  //     dispatch(
-  //       setFilters({
-  //         searchValue: params.search,
-  //         categoryId: Number(params.category),
-  //         currentPage: Number(params.currentPage),
-  //         sort: sort || sortList[0],
-  //       })
-  //     );
-
-  //     isSearch.current = true;
-  //   }
-  // }, []);
+      isSearch.current = true;
+    }
+  }, []);
 
   // When first rendering, do not sew query parameters into the url
   // При первом рендеринге не вшивать параметры запроса в url
   // isMounted - The toggle switch responsible for this condition
-  // React.useEffect(() => {
-  //   if (isMounted.current) {
-  //     const queryString = qs.stringify({
-  //       sortProperty: sort.sortProperty,
-  //       categoryId: categoryId,
-  //       currentPage: currentPage,
-  //     });
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId: categoryId,
+        currentPage: currentPage,
+      });
 
-  //     navigate(`?${queryString}`);
-  //   }
-  //   getPizzas();
-  //   isMounted.current = true;
-  // }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   // If the parameters were changed and there was a first render
   // Если изменили парметры и был первый рендер
-  // React.useEffect(() => {
-  //   window.scrollTo(0, 0);
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
 
-  //   if (!isSearch.current) {
-  //     getPizzas();
-  //   }
+    if (!isSearch.current) {
+      getPizzas();
+    }
 
-  //   isSearch.current = false;
-  //   //
-  // }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+    isSearch.current = false;
+    //
+  }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   React.useEffect(() => {
     getPizzas();
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
   return (
     <div className="container">
       <div className="content__top">
