@@ -65,7 +65,6 @@ const Home: React.FC = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)); // delete first symbol in the link (symbol: ?)
       const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
-      console.log(params);
 
       dispatch(
         setFilters({

@@ -16,6 +16,7 @@ const Cart: React.FC = () => {
       dispatch(clearItems());
     }
   };
+
   if (!totalPrice) {
     return <CartEmpty />;
   }
