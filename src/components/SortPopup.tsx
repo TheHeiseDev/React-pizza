@@ -1,17 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  handleTypeSort,
-  selectSort,
-  SortPropertyEnum,
-} from "../redux/slices/filterSlice";
+import { useDispatch } from "react-redux";
+import { handleTypeSort } from "../redux/slices/filterSlice";
+import { Sort, SortPropertyEnum } from "../redux/types/typesFilter";
 
-type SortItem = {
-  name: string;
-  sortProperty: SortPropertyEnum;
+type SortPopupProps = {
+  sort: Sort;
 };
 
-export const sortList: SortItem[] = [
+export const sortList: Sort[] = [
   { name: "Популярности (Более)", sortProperty: SortPropertyEnum.RATING },
   { name: "Популярности (Менее)", sortProperty: SortPropertyEnum.RATING_ },
   { name: "Цене (Убыванию)", sortProperty: SortPropertyEnum.PRICE },
@@ -20,15 +16,13 @@ export const sortList: SortItem[] = [
   { name: "Алфавиту (Я-А)", sortProperty: SortPropertyEnum.TITLE_ },
 ];
 
-const SortMemo: React.FC = () => {
+const SortPopup: React.FC<SortPopupProps> = React.memo(({ sort }) => {
   const dispatch = useDispatch();
-  const sort = useSelector(selectSort);
 
   const sortRef = React.useRef<HTMLDivElement>(null);
-
   const [open, setOpen] = React.useState(false);
 
-  const onClicksortListItem = (obj: SortItem) => {
+  const onClickSortListItem = (obj: Sort) => {
     dispatch(handleTypeSort(obj));
     setOpen(false);
   };
@@ -88,7 +82,7 @@ const SortMemo: React.FC = () => {
             {sortList.map((obj) => (
               <li
                 key={obj.sortProperty}
-                onClick={() => onClicksortListItem(obj)}
+                onClick={() => onClickSortListItem(obj)}
                 className={sort.sortProperty === obj.sortProperty ? "active" : ""}
               >
                 {obj.name}
@@ -99,6 +93,6 @@ const SortMemo: React.FC = () => {
       )}
     </div>
   );
-};
+});
 
-export const SortPopup = React.memo(SortMemo);
+export default SortPopup;

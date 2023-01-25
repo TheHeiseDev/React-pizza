@@ -1,34 +1,11 @@
 import { RootState } from "./../store";
 import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-
-type Pizza = {
-  id: string;
-  title: string;
-  category: number;
-  imageUrl: string;
-  price: number;
-  rating: number;
-  sizes: number[];
-  types: number[];
-};
-
-interface PizzaSliceState {
-  items: Pizza[];
-  isLoading: boolean;
-}
+import { Pizza, PizzaSliceState, SearchPizzaParams } from "../types/typesPizza";
 
 const initialState: PizzaSliceState = {
   items: [],
   isLoading: true,
-};
-
-export type SearchPizzaParams = {
-  sortBy: string;
-  order: string;
-  category: string;
-  search: string;
-  currentPage: string;
 };
 
 // fetchPizzas<first, second> - The first type is the return type, the second type is the input
