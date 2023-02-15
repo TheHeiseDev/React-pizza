@@ -14,7 +14,7 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
-
+  padding: 0 0 40px 0;
   @media (max-width: 645px) {
     width: calc(100vw - 30px);
     margin: 15px auto;
@@ -23,8 +23,11 @@ body {
 .container--cart .content__items {
   display: block;
 }
+
 .content {
-  padding: 40px 0;
+  @media (min-width: 400) {
+    padding: 40px 0;
+  }
 
   &__title {
     font-weight: 800;
@@ -107,6 +110,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 567px) {
+      flex-direction: column;
+      gap: 20px;
+    }
   }
 
   .content__title {
@@ -164,6 +172,35 @@ body {
     border-top: 1px solid $gray-line;
     padding-top: 30px;
     margin-top: 30px;
+    gap: 20px;
+
+    // Адаптация карточек товаров под мобильную версию
+    @media (max-width: 567px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+
+      .cart__item-img {
+        width: max-content;
+        margin: 0;
+      }
+
+      .cart__item-img img {
+        width: 200px;
+        height: 200px;
+      }
+      .cart__item-info {
+        width: 100%;
+        text-align: center;
+      }
+      .cart__item-count {
+        width: 30%;
+      }
+      .cart__item-remove {
+        width: 100%;
+        justify-content: center;
+      }
+    }
 
     &-img {
       display: flex;
@@ -212,6 +249,7 @@ body {
 
       b {
         font-size: 22px;
+        margin: 0 10px 0 10px;
       }
     }
 
@@ -268,6 +306,10 @@ body {
       display: flex;
       justify-content: space-between;
 
+      @media (max-width: 567px) {
+        flex-direction: column;
+      }
+
       span {
         font-size: 22px;
 
@@ -283,6 +325,12 @@ body {
       display: flex;
       justify-content: space-between;
       margin-top: 40px;
+      gap: 20px;
+
+      @media (max-width: 567px) {
+        flex-direction: column;
+        align-items: center;
+      }
 
       .go-back-btn {
         display: flex;
@@ -327,7 +375,7 @@ body {
 
   &--empty {
     margin: 80px auto;
-    width: 620px;
+    // width: 620px;
     text-align: center;
 
     h2 {
@@ -336,7 +384,7 @@ body {
     }
 
     p {
-      font-size: 20px;
+      // font-size: 20px;
       line-height: 145.4%;
       letter-spacing: 0.01em;
       color: #777777;
@@ -360,5 +408,11 @@ body {
       font-weight: 600;
       font-size: 18px;
     }
+  }
+}
+
+.container--cart {
+  @media (max-width: 567px) {
+    margin: 40px auto;
   }
 }

@@ -17,7 +17,6 @@ import {
 } from "../redux/slices/filterSlice";
 
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
-import { SearchPizzaParams } from "../redux/types/typesPizza";
 import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {

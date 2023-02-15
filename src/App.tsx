@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import "./scss/app.scss";
 import React from "react";
 import Home from "./pages/Home";
-// import NotFound from "./pages/NotFound";
 
 import MainLayout from "./layouts/MainLayout";
 
