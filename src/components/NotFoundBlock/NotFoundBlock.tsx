@@ -7,7 +7,7 @@ const NotFoundBlock: React.FC = () => {
       <h1 className={styles.root}>
         <span>😕</span>
         <br />
-        Ничего не найдено
+        <p>Ничего не найдено</p>
       </h1>
     </div>
   );

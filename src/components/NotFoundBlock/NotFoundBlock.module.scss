@@ -4,4 +4,10 @@
   span {
     font-size: 64px;
   }
+
+  p {
+    @media (max-width: 567px) {
+      font-size: 28px;
+    }
+  }
 }

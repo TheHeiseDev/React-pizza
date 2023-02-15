@@ -416,3 +416,8 @@ body {
     margin: 40px auto;
   }
 }
+.fullpizzas img {
+  @media (max-width: 567px) {
+    width: 100%;
+  }
+}
