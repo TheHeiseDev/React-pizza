@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import qs from "qs";
 
 import Categories from "../components/Categories";
-import SortPopup, { sortList } from "../components/SortPopup";
+import SortPopup from "../components/SortPopup";
 import PizzaSkeleton from "../components/PizzaBlock/PizzaSkeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
@@ -14,10 +14,11 @@ import {
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from "../redux/slices/filterSlice";
+} from "../redux/slices/filterSlice/filterSlice";
 
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice/pizzaSlice";
 import { useAppDispatch } from "../redux/store";
+import { sortList } from "../data";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();

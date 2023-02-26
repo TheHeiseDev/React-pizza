@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import "./scss/app.scss";
 import React from "react";
-import Home from "./pages/Home";
 
+import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
+import Suspense from "./components/Suspense";
 
 const Cart = React.lazy(() => import(/* webpachChunkName: "Cart" */ "./pages/Cart"));
 const FullPizas = React.lazy(
@@ -21,9 +22,7 @@ function App() {
         <Route
           path="cart"
           element={
-            <React.Suspense
-              fallback={<h2 className="container">Идет загрузка корзины... </h2>}
-            >
+            <React.Suspense fallback={<Suspense value="Идет загрузка корзины..." />}>
               <Cart />
             </React.Suspense>
           }
@@ -31,7 +30,7 @@ function App() {
         <Route
           path="pizza/:id"
           element={
-            <React.Suspense fallback={<h2 className="container">Идет загрузка... </h2>}>
+            <React.Suspense fallback={<Suspense value="Идет загрузка ..." />}>
               <FullPizas />
             </React.Suspense>
           }
@@ -39,9 +38,7 @@ function App() {
         <Route
           path="*"
           element={
-            <React.Suspense
-              fallback={<h2 className="container">Пожалуйста подождите.. </h2>}
-            >
+            <React.Suspense fallback={<Suspense value="Пожалуйста подождите..." />}>
               <NotFound />
             </React.Suspense>
           }
@@ -52,4 +49,3 @@ function App() {
 }
 
 export default App;
-//526 Kb - bundle;

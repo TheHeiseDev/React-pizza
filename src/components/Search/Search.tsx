@@ -1,19 +1,20 @@
-import React, { ChangeEvent, ChangeEventHandler } from "react";
+import React from "react";
 import styles from "./Search.module.scss";
 import searchSVG from "../../assets/img/search.svg";
 import removeSVG from "../../assets/img/btn-remove.svg";
 
 import { useDispatch } from "react-redux";
-import { setSearchValue } from "../../redux/slices/filterSlice";
-import debounce from "lodash.debounce";
+import { setSearchValue } from "../../redux/slices/filterSlice/filterSlice";
+import debounce from "../../utils/debounce";
 
 const Search: React.FC = () => {
   const dispatch = useDispatch();
+
   // Responsible for the fast display of input data (search value)
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  // When you press the clear button, the focus stays on the input
+  // When press the clear button, the focus stays on the input
   const onClickClear = () => {
     setValue("");
     dispatch(setSearchValue(""));

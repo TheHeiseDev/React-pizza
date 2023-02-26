@@ -25,8 +25,9 @@ body {
 }
 
 .content {
-  @media (min-width: 400) {
-    padding: 40px 0;
+  padding: 40px 0;
+  @media (max-width: 567px) {
+    padding: 20px 0;
   }
 
   &__title {

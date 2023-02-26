@@ -1,20 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { handleTypeSort } from "../redux/slices/filterSlice";
-import { Sort, SortPropertyEnum } from "../redux/types/typesFilter";
+import { sortList } from "../data";
+import { handleTypeSort } from "../redux/slices/filterSlice/filterSlice";
+import { Sort } from "../redux/slices/filterSlice/typesFilter";
 
 type SortPopupProps = {
   sort: Sort;
 };
-
-export const sortList: Sort[] = [
-  { name: "Популярности (Более)", sortProperty: SortPropertyEnum.RATING },
-  { name: "Популярности (Менее)", sortProperty: SortPropertyEnum.RATING_ },
-  { name: "Цене (Убыванию)", sortProperty: SortPropertyEnum.PRICE },
-  { name: "Цене (Возрастанию)", sortProperty: SortPropertyEnum.PRICE_ },
-  { name: "Алфавиту (А-Я)", sortProperty: SortPropertyEnum.TITLE },
-  { name: "Алфавиту (Я-А)", sortProperty: SortPropertyEnum.TITLE_ },
-];
 
 const SortPopup: React.FC<SortPopupProps> = React.memo(({ sort }) => {
   const dispatch = useDispatch();

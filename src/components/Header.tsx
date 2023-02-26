@@ -4,18 +4,18 @@ import React from "react";
 
 import logoSvg from "../assets/img/pizza-logo.svg";
 import Search from "./Search/Search";
-import { selectCart } from "../redux/slices/cartSlice";
+import { selectCart } from "../redux/slices/cartSlice/cartSlice";
 
 function Header() {
   const { items, totalPrice } = useSelector(selectCart);
-  const isMounted = React.useRef(false);
+  const isMountedHeaderComponemt = React.useRef(false);
 
   React.useEffect(() => {
-    if (isMounted.current) {
+    if (isMountedHeaderComponemt.current) {
       const json = JSON.stringify(items);
       localStorage.setItem("cart", json);
     }
-    isMounted.current = true;
+    isMountedHeaderComponemt.current = true;
   }, [items]);
 
   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);

@@ -1,9 +1,8 @@
-import { RootState } from "./../store";
+import { RootState } from "../../store";
 import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Pizza, PizzaSliceState, SearchPizzaParams } from "../types/typesPizza";
-
-const API_URL = "https://63c3b1edf0028bf85f9c9068.mockapi.io/pizzas";
+import { Pizza, PizzaSliceState, SearchPizzaParams } from "./typesPizza";
+import { API_URL } from "../../../API/serviceApi";
 
 const initialState: PizzaSliceState = {
   items: [],
@@ -43,7 +42,7 @@ const pizzaSlice = createSlice({
         state.items = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchPizzas.rejected, (state, action) => {
+      .addCase(fetchPizzas.rejected, (state) => {
         alert("Ошибка запроса получения данных из сервера");
         state.items = [];
       });

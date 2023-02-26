@@ -1,11 +1,10 @@
 import React from "react";
+import { categories } from "../data";
 
 type CategoriesProps = {
   value: number;
   onChangeCategory: (index: number) => void;
 };
-
-const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
 
 const Categories: React.FC<CategoriesProps> = React.memo(
   ({ value, onChangeCategory }) => {
