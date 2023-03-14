@@ -1,19 +1,21 @@
-import React, { useEffect } from "react";
+import { FC, memo, useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { sortList } from "../constants";
+
 import { handleTypeSort } from "../store/slices/filterSlice/filterSlice";
 import { Sort } from "../store/slices/filterSlice/typesFilter";
+
 import SvgTriangle from "./IconComponents/SvgTriangle";
 
 interface ISortPopupProps {
   sort: Sort;
 }
 
-const SortPopup: React.FC<ISortPopupProps> = React.memo(({ sort }) => {
+const SortPopup: FC<ISortPopupProps> = memo(({ sort }) => {
   const dispatch = useDispatch();
 
-  const sortRef = React.useRef<HTMLDivElement>(null);
-  const [open, setOpen] = React.useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
 
   const onClickSortListItem = (obj: Sort) => {
     dispatch(handleTypeSort(obj));

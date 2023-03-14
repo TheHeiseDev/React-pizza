@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, FC } from "react";
 import { categories } from "../constants";
 
 interface ICategoriesProps {
@@ -6,7 +6,7 @@ interface ICategoriesProps {
   onChangeCategory: (index: number) => void;
 }
 
-const Categories: React.FC<ICategoriesProps> = memo(({ value, onChangeCategory }) => {
+const Categories: FC<ICategoriesProps> = memo(({ value, onChangeCategory }) => {
   return (
     <div className="categories">
       <ul>
