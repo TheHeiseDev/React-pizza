@@ -1,12 +1,14 @@
-import React from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
-import { addItem, removeItem, minusItem } from "../../redux/slices/cartSlice/cartSlice";
-import { CartItem } from "../../redux/slices/cartSlice/typesCart";
+
+import { addItem, removeItem, minusItem } from "../../store/slices/cartSlice/cartSlice";
+import { CartItem } from "../../store/slices/cartSlice/typesCart";
+
 import SvgButtonMinus from "../IconComponents/SvgButtonMinus";
 import SvgButtonPlus from "../IconComponents/SvgButtonPlus";
 import SvgButtonRemove from "../IconComponents/SvgButtonRemove";
 
-type CartItemProps = {
+interface ICartItemProps {
   id: string;
   title: string;
   price: number;
@@ -14,9 +16,9 @@ type CartItemProps = {
   size: number;
   type: string;
   count: number;
-};
+}
 
-const CartItemBlock: React.FC<CartItemProps> = ({
+const CartItemBlock: FC<ICartItemProps> = ({
   id,
   title,
   price,

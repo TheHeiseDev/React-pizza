@@ -1,4 +1,4 @@
-import { Sort, SortPropertyEnum } from "./redux/slices/filterSlice/typesFilter";
+import { Sort, SortPropertyEnum } from "./store/slices/filterSlice/typesFilter";
 
 export const typeNames = ["тонкое", "традиционное"];
 export const categories = [

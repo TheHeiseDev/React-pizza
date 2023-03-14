@@ -1,14 +1,16 @@
-import React from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 import CartEmpty from "../components/CartEmpty";
 import CartItemBlock from "../components/CartItem/CartItemBlock";
 import SvgArrowLeft from "../components/IconComponents/SvgArrowLeft";
 import SvgBusket from "../components/IconComponents/SvgBusket";
 import SvgButtonClear from "../components/IconComponents/SvgButtonClear";
-import { clearItems, selectCart } from "../redux/slices/cartSlice/cartSlice";
 
-const Cart: React.FC = () => {
+import { clearItems, selectCart } from "../store/slices/cartSlice/cartSlice";
+
+const Cart: FC = () => {
   const dispatch = useDispatch();
 
   const { items, totalPrice } = useSelector(selectCart);

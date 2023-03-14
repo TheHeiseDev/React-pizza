@@ -1,26 +1,12 @@
 import { RootState } from "../../store";
-import axios from "axios";
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Pizza, PizzaSliceState, SearchPizzaParams } from "./typesPizza";
-import { API_URL } from "../../../API/serviceApi";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Pizza, PizzaSliceState } from "./typesPizza";
+import { fetchPizzas } from "./pizzaThunk";
 
 const initialState: PizzaSliceState = {
   items: [],
   isLoading: true,
 };
-
-// fetchPizzas<first, second> - The first type is the return type, the second type is the input
-export const fetchPizzas = createAsyncThunk<Pizza[], SearchPizzaParams>(
-  "pizza/fetchPizzas",
-  async (params) => {
-    const { sortBy, order, category, search, currentPage } = params;
-    const { data } = await axios.get<Pizza[]>(
-      `${API_URL}?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}${search}`
-    );
-
-    return data;
-  }
-);
 
 const pizzaSlice = createSlice({
   name: "pizza",

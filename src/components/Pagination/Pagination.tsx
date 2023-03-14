@@ -1,13 +1,13 @@
-import React from "react";
+import { FC } from "react";
 import styles from "./Pagination.module.scss";
 import ReactPaginate from "react-paginate";
 
-type PaginationProps = {
+interface IPaginationProps {
   onChangePage: (page: number) => void;
   currentPage: number;
-};
+}
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, onChangePage }) => {
+const Pagination: FC<IPaginationProps> = ({ currentPage, onChangePage }) => {
   // Invoke when user click to request another page.
   const handlePageClick = (event: any) => {
     onChangePage(event.selected + 1);

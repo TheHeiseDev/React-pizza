@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { sortList } from "../data";
-import { handleTypeSort } from "../redux/slices/filterSlice/filterSlice";
-import { Sort } from "../redux/slices/filterSlice/typesFilter";
+import { sortList } from "../constants";
+import { handleTypeSort } from "../store/slices/filterSlice/filterSlice";
+import { Sort } from "../store/slices/filterSlice/typesFilter";
 import SvgTriangle from "./IconComponents/SvgTriangle";
 
-type SortPopupProps = {
+interface ISortPopupProps {
   sort: Sort;
-};
+}
 
-const SortPopup: React.FC<SortPopupProps> = React.memo(({ sort }) => {
+const SortPopup: React.FC<ISortPopupProps> = React.memo(({ sort }) => {
   const dispatch = useDispatch();
 
   const sortRef = React.useRef<HTMLDivElement>(null);
@@ -24,7 +24,7 @@ const SortPopup: React.FC<SortPopupProps> = React.memo(({ sort }) => {
     setOpen((prev) => !prev);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickEvent = (event: MouseEvent) => {
       const path = sortRef.current && event.composedPath().includes(sortRef.current);
       if (!path) {

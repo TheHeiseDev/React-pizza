@@ -1,12 +1,12 @@
-import React from "react";
+import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { typeNames } from "../../data";
-import { addItem, selectCartItemById } from "../../redux/slices/cartSlice/cartSlice";
-import { CartItem } from "../../redux/slices/cartSlice/typesCart";
+import { typeNames } from "../../constants";
+import { addItem, selectCartItemById } from "../../store/slices/cartSlice/cartSlice";
+import { CartItem } from "../../store/slices/cartSlice/typesCart";
 import SvgPlus from "../IconComponents/SvgPlus";
 
-type PizzaBlockProps = {
+interface IPizzaBlockProps {
   id: string;
   title: string;
   price: number;
@@ -15,9 +15,9 @@ type PizzaBlockProps = {
   types: number[];
   link: string;
   rating: number;
-};
+}
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({
+const PizzaBlock: FC<IPizzaBlockProps> = ({
   id,
   title,
   price,
@@ -29,8 +29,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const dispatch = useDispatch();
   const addedCount = useSelector(selectCartItemById(id));
 
-  const [activeType, setActiveType] = React.useState<number>(0);
-  const [activeSize, setActiveSize] = React.useState<number>(0);
+  const [activeType, setActiveType] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
 
   const onClickAdd = () => {
     const item: CartItem = {

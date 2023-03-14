@@ -1,18 +1,19 @@
-import React from "react";
+import { FC, useRef, useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./Search.module.scss";
+
 import searchSVG from "../../assets/img/search.svg";
 import removeSVG from "../../assets/img/btn-remove.svg";
-
-import { useDispatch } from "react-redux";
-import { setSearchValue } from "../../redux/slices/filterSlice/filterSlice";
 import debounce from "../../utils/debounce";
 
-const Search: React.FC = () => {
+import { setSearchValue } from "../../store/slices/filterSlice/filterSlice";
+
+const Search: FC = () => {
   const dispatch = useDispatch();
 
   // Responsible for the fast display of input data (search value)
-  const [value, setValue] = React.useState("");
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // When press the clear button, the focus stays on the input
   const onClickClear = () => {
@@ -23,7 +24,7 @@ const Search: React.FC = () => {
   };
 
   // Loading delay when searching, search is performed (500 ms) after input is paused
-  const updateSearchValue = React.useCallback(
+  const updateSearchValue = useCallback(
     debounce((str: string) => {
       dispatch(setSearchValue(str));
     }, 500),
@@ -35,7 +36,7 @@ const Search: React.FC = () => {
     updateSearchValue(event.target.value);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       setValue("");
       dispatch(setSearchValue(""));

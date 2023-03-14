@@ -1,5 +1,6 @@
-import React from "react";
+import { FC, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import qs from "qs";
 
 import Categories from "../components/Categories";
@@ -8,29 +9,28 @@ import PizzaSkeleton from "../components/PizzaBlock/PizzaSkeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 
-import { useSelector } from "react-redux";
 import {
   selectFilter,
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from "../redux/slices/filterSlice/filterSlice";
+} from "../store/slices/filterSlice/filterSlice";
+import { selectPizzaData } from "../store/slices/pizzaSlice/pizzaSlice";
+import { useAppDispatch } from "../store/store";
+import { fetchPizzas } from "../store/slices/pizzaSlice/pizzaThunk";
 
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice/pizzaSlice";
-import { useAppDispatch } from "../redux/store";
-import { sortList } from "../data";
+import { sortList } from "../constants";
 
-const Home: React.FC = () => {
+const Home: FC = () => {
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
-  const isSearch = React.useRef(false);
-  const isMounted = React.useRef(false);
 
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
   const { items, isLoading } = useSelector(selectPizzaData);
 
-  const onChangeCategory = React.useCallback((id: number) => {
+  const onChangeCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
   }, []);
 
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
 
   // If there was a first render, then we check the URL parameters and save in the redux
   // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)); // delete first symbol in the link (symbol: ?)
       const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
@@ -78,11 +78,10 @@ const Home: React.FC = () => {
       isSearch.current = true;
     }
   }, []);
-
   // When first rendering, do not sew query parameters into the url
   // При первом рендеринге не вшивать параметры запроса в url
   // isMounted - The toggle switch responsible for this condition
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
         sortProperty: sort.sortProperty,
@@ -97,7 +96,7 @@ const Home: React.FC = () => {
 
   // If the parameters were changed and there was a first render
   // Если изменили парметры и был первый рендер
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
 
     if (!isSearch.current) {
@@ -108,7 +107,7 @@ const Home: React.FC = () => {
     //
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getPizzas();
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
